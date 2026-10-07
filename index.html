@@ -190,13 +190,6 @@
     .btn-sm { padding: 5px 9px; font-size: 11px; border-radius: var(--radius-sm); }
     .btn-block { width: 100%; padding: 11px; font-size: 14px; }
 
-    .csv-drawer {
-      background: white; border-bottom: 1px solid var(--gray-200); padding: 12px 20px;
-      display: none; box-shadow: var(--shadow-sm);
-    }
-    .csv-drawer.show { display: block; }
-    .csv-box { max-width: 600px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
-
     .right-panel { display: flex; flex-direction: column; gap: 12px; }
 
     .placeholder-box {
@@ -402,7 +395,7 @@
     @media print {
       @page { size: A4 portrait; margin: 0; }
       body { background: white !important; padding: 0 !important; margin: 0 !important; }
-      .app-nav, .csv-drawer, .dashboard-layout > div:first-child,
+      .app-nav, .dashboard-layout > div:first-child,
       .result-summary-bar, .table-box, .diff-summary-card,
       .doc-top-bar, .modal-overlay { display: none !important; }
       .dashboard-layout { display: block !important; margin: 0 !important; padding: 0 !important; }
@@ -441,22 +434,11 @@
     </div>
     <div class="nav-actions">
       <a class="btn btn-sm btn-white" href="timetable-sample.csv" download="시간표_샘플.csv" style="text-decoration:none;">📥 샘플 다운로드</a>
-      <button class="btn btn-sm btn-white" onclick="toggleCsvDrawer()">📁 시간표 CSV 업로드</button>
     </div>
   </div>
 
   <!-- ── 데이터 상태 배너 (GitHub 정적 버전) ── -->
   <div id="dataBanner" class="data-banner" style="display:none;"></div>
-
-  <!-- ── 2. 접이식 CSV 업로드 서랍 ── -->
-  <div class="csv-drawer" id="csvDrawer">
-    <div class="csv-box">
-      <input type="file" id="csvFile" accept=".csv" style="flex:1; font-size:12px;">
-      <button class="btn btn-sm btn-success" onclick="uploadScheduleFile()">🔄 시간표 반영</button>
-      <button class="btn btn-sm btn-white" onclick="toggleCsvDrawer()">✕ 닫기</button>
-    </div>
-    <div id="uploadStatus" style="font-size:11px; margin-top:6px; text-align:center;"></div>
-  </div>
 
   <!-- ── 3. 메인 2열 대시보드 ── -->
   <div class="dashboard-layout">
@@ -724,10 +706,10 @@
   <script src="engine.js"></script>
   <script>
 /* ═══════════════════════════════════════════════════════════════
-   데이터 레이어 (GitHub 정적 버전)
-   - 시간표 CSV: localStorage > timetable.csv(fetch) > 빈 상태
+   데이터 레이어 (GitHub 정적 버전 v1.2)
+   - 시간표는 GitHub의 timetable.csv만 사용 (업로드 기능 없음)
+   - 학기 교체 시 관리자가 timetable.csv 파일만 교체하면 전체 자동 갱신
    ═══════════════════════════════════════════════════════════════ */
-var GB_LS_KEY = 'gyeolbogang_timetable_csv_v1';
 var GB = { scheduleList: [], scheduleIndex: {}, allTeachers: [], isSample: false, loaded: false };
 
 function rebuildEngine(csvText) {
@@ -745,22 +727,16 @@ function updateDataBanner() {
   if (!GB.loaded || !GB.scheduleList.length) {
     banner.style.display = 'block';
     banner.className = 'data-banner warn';
-    banner.innerHTML = "⚠️ 시간표 데이터가 없습니다. 우측 상단 <b>📁 시간표 CSV 업로드</b> 버튼으로 시간표 CSV를 등록해주세요.";
+    banner.innerHTML = "⚠️ 시간표 데이터를 불러오지 못했습니다. 관리자에게 문의해주세요.";
   } else if (GB.isSample) {
     banner.style.display = 'block';
     banner.className = 'data-banner warn';
-    banner.innerHTML = "⚠️ 현재 <b>샘플 데이터</b>로 동작 중입니다. GitHub의 <b>timetable.csv</b>를 실제 시간표로 교체하거나, 우측 상단 📁 버튼으로 업로드해주세요.";
+    banner.innerHTML = "⚠️ 현재 <b>샘플 데이터</b>로 동작 중입니다. 관리자가 GitHub의 <b>timetable.csv</b>를 실제 시간표로 교체해주세요.";
   } else {
     banner.style.display = 'block';
     banner.className = 'data-banner ok';
     banner.innerHTML = "✅ 시간표 로드됨 (" + GB.allTeachers.length + "명)";
   }
-}
-
-function simpleHash(s) {
-  var h = 5381;
-  for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
-  return String(h);
 }
 
 function isSampleCSV(text) {
@@ -772,47 +748,24 @@ function isSampleCSV(text) {
 function decodeCSVBuffer(buf) {
   var t = "";
   try { t = new TextDecoder("utf-8").decode(buf); } catch (e) {}
-  if (t.indexOf("�") >= 0) {
+  if (t.indexOf("\uFFFD") >= 0) {
     try { t = new TextDecoder("euc-kr").decode(buf); } catch (e) {}
   }
   return t;
 }
 
-/* [수정 v1.1] 데이터 우선순위:
-   1) 저장소에 실제 시간표가 있으면 → 항상 최신으로 사용 (관리자가 교체하면 전체 자동 반영)
-   2) 저장소가 샘플이면 → 사용자가 업로드한 실제 데이터를 유지 (샘플이 덮어쓰지 않음)
-   3) 둘 다 없으면 → 빈 상태 */
 function loadTimetableOnStart() {
-  var LS_HASH = GB_LS_KEY + "_hash";
-  var saved = null, savedHash = null;
-  try { saved = localStorage.getItem(GB_LS_KEY); savedHash = localStorage.getItem(LS_HASH); } catch (e) {}
-  var useSaved = function() {
-    rebuildEngine(saved);
-    GB.isSample = isSampleCSV(saved);
-    updateDataBanner();
-  };
-  var useText = function(t) {
-    rebuildEngine(t);
-    GB.isSample = isSampleCSV(t);
-    try { localStorage.setItem(GB_LS_KEY, t); localStorage.setItem(LS_HASH, simpleHash(t)); } catch (e) {}
-    updateDataBanner();
-  };
   fetch("timetable.csv?ts=" + Date.now()).then(function(r) {
     if (!r.ok) throw new Error("no csv");
     return r.arrayBuffer();
   }).then(function(buf) {
     var t = decodeCSVBuffer(buf);
-    if (isSampleCSV(t)) {
-      if (saved && !isSampleCSV(saved)) { useSaved(); return; }
-      useText(t);
-      return;
-    }
-    var h = simpleHash(t);
-    if (saved && savedHash === h && !isSampleCSV(saved)) { useSaved(); return; }
-    useText(t);
+    rebuildEngine(t);
+    GB.isSample = isSampleCSV(t);
+    updateDataBanner();
   }).catch(function() {
-    if (saved) useSaved();
-    else { GB.loaded = false; updateDataBanner(); }
+    GB.loaded = false;
+    updateDataBanner();
   });
 }
 
@@ -908,9 +861,6 @@ function loadTimetableOnStart() {
       else label.classList.remove('checked');
     }
 
-    function toggleCsvDrawer() {
-      document.getElementById('csvDrawer').classList.toggle('show');
-    }
 
     function getDateForDay(baseDateStr, targetDayKor) {
       var d = new Date(baseDateStr + 'T00:00:00');
@@ -1005,7 +955,7 @@ function loadTimetableOnStart() {
 
       if (!teacher) { alert("기준 교사명을 입력해주세요."); return; }
       if (!isSwap && !isSub) { alert("수업 교체 또는 보강 탐색 중 하나 이상을 선택해주세요."); return; }
-      if (!GB.scheduleList.length) { alert("시간표 CSV를 먼저 업로드해주세요. (우측 상단 📁 버튼)"); return; }
+      if (!GB.scheduleList.length) { alert("시간표 데이터를 불러오는 중입니다. 잠시 후 다시 시도해주세요."); return; }
 
       document.getElementById('initialPlaceholder').style.display = 'block';
       document.getElementById('initialPlaceholder').innerHTML = "<div class='icon'>⏳</div><p>시간표 검증 및 가능 여부 계산 중...</p>";
@@ -1119,7 +1069,7 @@ function loadTimetableOnStart() {
         alert("공동 공강을 찾기 위해 최소 2명 이상의 교사명을 입력해 주세요.");
         return;
       }
-      if (!GB.scheduleList.length) { alert("시간표 CSV를 먼저 업로드해주세요. (우측 상단 📁 버튼)"); return; }
+      if (!GB.scheduleList.length) { alert("시간표 데이터를 불러오는 중입니다. 잠시 후 다시 시도해주세요."); return; }
 
       document.getElementById('initialPlaceholder').style.display = 'block';
       document.getElementById('initialPlaceholder').innerHTML = "<div class='icon'>⏳</div><p>" + escapeHtml(teacherList.join(', ')) + " 선생님들의 공강 시간을 비교 분석 중...</p>";
@@ -1527,7 +1477,7 @@ function loadTimetableOnStart() {
     function openTeacherModal() {
       var teacher = document.getElementById('teacher').value.trim();
       if (!teacher) { alert("기준 교사명을 입력해주세요."); return; }
-      if (!GB.scheduleList.length) { alert("시간표 CSV를 먼저 업로드해주세요. (우측 상단 📁 버튼)"); return; }
+      if (!GB.scheduleList.length) { alert("시간표 데이터를 불러오는 중입니다. 잠시 후 다시 시도해주세요."); return; }
 
       document.getElementById('teacherModal').classList.add('show');
       document.getElementById('modalTitle').textContent = "📊 " + teacher + " 선생님 전체 시간표";
@@ -1574,42 +1524,6 @@ function loadTimetableOnStart() {
       return html;
     }
 
-    /* [GitHub 정적 버전] CSV를 브라우저에서 직접 파싱 → localStorage 저장 */
-    function uploadScheduleFile() {
-      var fileInput = document.getElementById('csvFile');
-      var statusDiv = document.getElementById('uploadStatus');
-      if (!fileInput.files.length) { alert("업로드할 CSV 파일을 선택해주세요."); return; }
-
-      var file = fileInput.files[0];
-      var reader = new FileReader();
-      statusDiv.innerText = "⏳ 읽는 중...";
-
-      reader.onload = function(e) {
-        var text = e.target.result;
-        if (text.indexOf("\uFFFD") >= 0) {
-          var reader2 = new FileReader();
-          reader2.onload = function(e2) { applyUploadedCSV(e2.target.result, statusDiv); };
-          reader2.readAsText(file, 'UTF-8');
-        } else {
-          applyUploadedCSV(text, statusDiv);
-        }
-      };
-      reader.readAsText(file, 'EUC-KR');
-    }
-
-    function applyUploadedCSV(text, statusDiv) {
-      try {
-        rebuildEngine(text);
-        if (!GB.scheduleList.length) throw new Error("시간표 데이터를 찾지 못했습니다. (4행 교사명 / 요일·교시 양식 확인)");
-        try { localStorage.setItem(GB_LS_KEY, text); localStorage.setItem(GB_LS_KEY + "_hash", simpleHash(text)); } catch (e) {}
-        GB.isSample = isSampleCSV(text);
-        updateDataBanner();
-        statusDiv.innerText = "✅ 성공적으로 반영되었습니다. (" + GB.allTeachers.length + "명)";
-        setTimeout(function() { toggleCsvDrawer(); }, 1500);
-      } catch (err) {
-        statusDiv.innerText = "❌ 실패: " + err.message;
-      }
-    }
   </script>
 </body>
 </html>
