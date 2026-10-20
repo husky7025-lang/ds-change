@@ -14,9 +14,17 @@ function extractClassName(text) {
   return m ? m[1].replace(/\s+/g, "") : t;
 }
 
+/* [수정] 시트에서 "3-9"가 날짜로 변환돼 CSV로 내려오는 경우("03월 09일") 원래 학급 표기로 복원 */
+function normalizeClassroom(text) {
+  const t = String(text || "").trim();
+  const m = t.match(/(\d+)\s*월\s*(\d+)\s*일/);
+  if (m) return String(parseInt(m[1], 10)) + "-" + String(parseInt(m[2], 10));
+  return t;
+}
+
 function splitClassName(className) {
   const t = String(className || "");
-  const m = t.match(/(\d+\s*-\s*\d+/);
+  const m = t.match(/(\d+\s*-\s*\d+)/);
   if (m) {
     const cls = m[1].replace(/\s+/g, "");
     const subj = t.slice(0, m.index).replace(/[-–—\s]+$/, "").trim() || t;
@@ -110,7 +118,7 @@ function parseSheetValues(data) {
     teachers.forEach(function(t) {
       const rawSubject = String(data[r][t.colIndex] || "").trim();
       if (!rawSubject) return;
-      const rawClassroom = String((data[r + 1] || [])[t.colIndex] || "").trim();
+      const rawClassroom = normalizeClassroom(String((data[r + 1] || [])[t.colIndex] || "").trim());
       const subject = rawSubject;
       const classroom = rawClassroom;
       let combinedName = subject;
