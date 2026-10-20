@@ -16,13 +16,53 @@ function extractClassName(text) {
 
 function splitClassName(className) {
   const t = String(className || "");
-  const m = t.match(/(\d+\s*-\s*\d+)/);
+  const m = t.match(/(\d+\s*-\s*\d+/);
   if (m) {
     const cls = m[1].replace(/\s+/g, "");
     const subj = t.slice(0, m.index).replace(/[-–—\s]+$/, "").trim() || t;
     return { subj: subj, cls: cls };
   }
   return { subj: t, cls: "" };
+}
+
+/* 과목명 기반 교과군 판별 */
+function deduceSubjectCategory(subj) {
+  if (!subj) return "교과";
+  subj = String(subj);
+  if (subj.includes("국어") || subj.includes("문학") || subj.includes("심국") || subj.includes("독서") || subj.includes("화작") || subj.includes("언매")) return "국어";
+  if (subj.includes("수학") || subj.includes("미적") || subj.includes("기하") || subj.includes("수통") || subj.includes("수적") || subj.includes("확통")) return "수학";
+  if (subj.includes("영어") || subj.includes("영Ⅱ") || subj.includes("심영") || subj.includes("미영") || subj.includes("영회")) return "영어";
+  if (subj.includes("물") || subj.includes("화") || subj.includes("생") || subj.includes("지") || subj.includes("과") || subj.includes("통과")) return "과학";
+  if (subj.includes("역사") || subj.includes("한국") || subj.includes("사회") || subj.includes("통사") || subj.includes("세지") || subj.includes("정법") || subj.includes("윤리") || subj.includes("경제")) return "사회";
+  if (subj.includes("정보") || subj.includes("프로") || subj.includes("공일") || subj.includes("기술") || subj.includes("가정") || subj.includes("인공지능")) return "기술·가정";
+  if (subj.includes("체육") || subj.includes("운동") || subj.includes("스포츠")) return "체육";
+  if (subj.includes("음악") || subj.includes("미술") || subj.includes("연극")) return "예술";
+  if (subj.includes("한문") || subj.includes("일본") || subj.includes("중국") || subj.includes("제2외")) return "제2외국어/한문";
+  return "교과";
+}
+
+/* 시간표 데이터에서 교사별 최다 빈도 주 교과군 매핑 */
+function buildTeacherSubjectMap(scheduleList) {
+  const map = {};
+  const counts = {};
+  scheduleList.forEach(function(s) {
+    if (!s.teacher) return;
+    if (!counts[s.teacher]) counts[s.teacher] = {};
+    const cat = deduceSubjectCategory(s.className || s.subject);
+    counts[s.teacher][cat] = (counts[s.teacher][cat] || 0) + 1;
+  });
+  Object.keys(counts).forEach(function(t) {
+    let bestCat = "교과";
+    let maxCnt = 0;
+    Object.keys(counts[t]).forEach(function(cat) {
+      if (counts[t][cat] > maxCnt) {
+        maxCnt = counts[t][cat];
+        bestCat = cat;
+      }
+    });
+    map[t] = bestCat;
+  });
+  return map;
 }
 
 /* CSV 파서 (RFC4180 간이 구현: 따옴표·콤마·개행 처리) */
