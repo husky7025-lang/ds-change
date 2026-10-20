@@ -450,283 +450,7 @@
     }
 
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">
-    /* ═══════════════════════════
-       HWPX 계획서 파일 생성 및 다운로드 (v2)
-    ═══════════════════════════ */
-    var HWPX_TEMPLATE_BASE64 = "UEsDBBQAAAAAAEpiSF2C8EFHEwAAABMAAAAIAAAAbWltZXR5cGVhcHBsaWNhdGlvbi9od3AremlwUEsDBBQAAAAIAEpiSF1lDQ+e5wAAADYBAAALAAAAdmVyc2lvbi54bWxNj9tKw0AQhl9lmGvNbnoALd0WqS0RpJFUzaVsN9tkdQ8hm5NvL1kLCnPxMczP9896OxoNvWy8cpZhHFEEaYUrlC0Zvr0ebu8QfMttwbWzkuG39AjbzbrqV8nu8P4bhNFo61dVz7Bq23pFyDAMUcWtcCYSLvpqSDXURpMZjWNytSG0vJTtQ11rJXgb/HmaPb5k6W5/OqUZguGfrmG4RDDKThRPJBoX6NwpXRw7c5YNQ4rgfFiPRl9rTf8sEfh/QxJKQXq5KCEh4bbsdDj5y8xvgIZZ0MU95E/H+ex5nytbuMF/xBTJ5gdQSwMEFAAAAAgASmJIXcZpKoYiEQAAb08BABMAAABDb250ZW50cy9oZWFkZXIueG1s7V1Lb+PItf4rBO8mWbTFtyhh1IEs223NqOWGLafTm2mUqZLIMcliyFKrnVWCJECAbDLATDAIJkCCBEkQzKKRCXAbF7n3B7U9/+Giig9RsiRKsjQi6WovmhTrcU7V+T6eUy9+9KO3js29gX5gIbfBiwcCz0HXQH3LHTb4y97JE53nAgzcPrCRCxv8DQx47kdPPzLNuglBn3vr2G5QN0GDNzH26pXKeDw+MIFrIOfAQAfXfsUce45dkQRRrADP4+Mc3ko5POCDoQ88c5JPFFbIqc3JGaxUYwANbCE3yWWslMtAPkyymCtlIc03ybKacKYVYOTfJNmclXI5IMDQf+KB4URGb7A4a2CY0AFRjd4gztOfNIU38u0D5A8rfaMCbehAFwcV8UCsxGnRTPlW3xvQDJIgVCvIG0xSoreObZjAxyt16yR5osrYG7kWJr+tVMLp2Lt0LdwygR8XAb3R1VJxgzilgdyBNWzwI9+tIxBYQd0FDgzq2KgjD7p9ZIxIY9TTqesUVSmMqTwXQKPl4gYv8hRKV3Boud2Rw5E+Ir9yA4Swi3B4A91+cu1ZBv0fX9nhs5+OADFYclOhhflw0LECTK8HyMUDYMCAszB0aJVVfuoJZwMC9dNm99llh9TrYppMmSTjrH6DF3iOJG/wt3///O6PP+c+fPun2y++5Dl848EG3+ud8JwVHDtXsN+HNDnNTp623QHiBsCx7JseTXzSavZePzvrnbZbPDeG1tDEDV7lOc9HHvJDZWSeM5CLfRDgBi8RDvLRNfwx8K1IW4HngO9c4Bsb0hsbYgz9AfIdmt6x+rZFCEvgubenUR0KaaFKpNW0emKs3ndffn33+88//OubaQVPT3oPVFCYVlBIKyisqaCwQEFhsYLStIJ3v/3T7T9/fffnd5sr+PzVZffZx2e50VCe0fCvn5egC+Mrotk83HaavXaXwZbBlsG2SLA9bXY/bqZgKz9q2JbQqqXHaNUfN180u8cXx8ywmWGXyrDPeqfH5ymrlphVF9+qszr94tXzw7N0SMy4rAS9/ui57PKCURlRrwS2PN3V6bsgHFZEfh/6J5Ztp8b/xGiIYPIwbhhs+hAehdKaoI/GoRbQxdDvUFm6Z91jnrvyIbhuQdu+gGSUHcPwYdRkgQ0CM2rWMH3LR+g6bFTOClpoRAqMlCGCAOP6Yt1MNhzgQ6rBVK6x1cdmgxcORM5xSA/YyG/w/yXQf/H4KGnLDfNi5G2Y8wphjJwNM/ctMEQusKOMF2ed9tEKOStT3Tyv16WC9/q9lpDW6fd1cs/2/Dp55/T9Otl31vsy6/0Ne//o7PKwc/z6otN+nipB3ZsJSBvbgPKIeX/tXtwq/a9d++6MQC24EazdlIwN5huC9qjfCA/mg/IYQrXghrBnRnigd5ijV4NecEMobISQIxuoPWobePBboTyGIAoFt4QtvBaYkzAxh6IPGubBHHI0kPQASyj6QGIJLCFP74mijyyy2YQ5OY36wLLtQ38UmPRubLn0hs6otcL0LnIhz5kAG2ZrugQO2B7ZJxKZ0FRhK1hU0ccpS0Aws9nl3VPL9H04q0l2erzwkQd9bKU3NkjRzobweTyZbUZTpyK1QQzf4lm7JLY0bb6jAJ4gF194dKZYoD98An2XbooiOW6c58C/TuwtEbB9dA4Hya4OMhl7DgecCdzhyKaTbTbAlkuvTOB+Bui062fAAy4Mwu0dCJvEjERayRUK93iMgvC3yDDIBHJSqEhUiIql13HB5DpVNLmNC6dax8WTm6iCpPsCDxiWO0wqmVQxqWCq+EnhqaKTghOThvbFz3YrORoMAoi3LfjI7UOfTMdPUUBggpRxz8VBgH3rGqIRjhOHOeemRSM8W0VUCCW7qarjAloC+eO5UO2fhBFaePOK3kSYCjExCw+x/PCoqUmpNX034HgyqYKho0TokHKFDnFiDUlfSem+kuahQ2IvDwaP3cBDnsCjtnd0yElXEbEYOhg69owOJYUORS+jZ8XQwdCxKTrUPL07GDoYOnKFDi0VeMh7h8e2jIzBg8FjK/Co5iouZ/Bg8MgVPPQUPGhrMngweDB4xPCoTeAhKQweDB4MHlNTgqkpc4YPho+NBb9Cdr/cSNnX7HnqGBI2jFUGqJQVIOkJdGn/AGHvEgaQfAEkNYXORrIesgJr8u4jl1EV5HJSA7mLKiCXcfnkOiz+icRgkk+YpObSGUweAJN5S8g28RAZPvKFj9RsOvOzmJ/FYvbFUNHyFbMzqDCo5BUqbJp969tDyGUcnKhTwYk6CU7UVHCiJsGJWnTAlBUm6el29kZhbxQGkBmApCbc2XvkIe+RSfhOLuP3yFQAT+7i90gqhCfX0XuEBfH5hImUr63qxYXJvJ1gcrp4OSlcnhQtxwXLDB/5xEe+9qoXFx9aUoWWVKCli9eSwrVJ0VpcsMbwkU98sMl25mexAa51ELOv2ffyIYZNv5cZJ2z6fUswmYQm5DKGyVRwQu5imKTCE3IdwYQFKDmFSXoWnsHkATDRJzCZnNhFLlMw0Scw0VMw0ROY6Awm+YTJ9Aw8c7pYmMJgQmBSuXeyKa0Bg6t5Z51G5kyfxiedghFGPXDVgQOcvj9PfTpyKouYneXpR6ZXD8YWNsiJv17dAAHkTK/uw5+OLB/2n7jAgcQyYYM3Mfbqlcp4PD4wgWsg58BAB9d+xRx7jl2RBFGrnI69S9fCLRP4ifxtDB3OQ0GDVwSZnCJO27JzTD7IaUPQJ50dtuzItXCDP3354rLb7oXNF0pERevDARjZ+H6xuqApS4qNykmyV6Y1/r6Uz5ByU+VFTZT0/GsvSkJN24H6kiLWpAKon9FLm6ovS5Kq5V99kkTYgfqEUIQCqJ9hpBurr8t6AZhP0iUyxLB19VVNoQfv5Vz9LIxuqr6mqPSjHHlXX5P0XVBfVVKrBaC+LIp6iNNTAOpTFFndic+nV4UCUJ8qKWRF+va9PkHRl/rSedE/g6I31l+U9KX+ZE701wRF3wX6qTtdAPhnvaM2178mLPUp8qK/rio7ifrkqrD0rZoT/bNe0hvrr6ji0vdKXvTXNGEn/KfK0tIXS070z/JSHjTqUQD+0xWtuhP+02ryUmLJi/4ZbtrG+lerylJg5UT/mlSVd8J/uqosNay86K9VtZ3wX01WlzZsTvQXBUGnc2BbH/ckI2oFIMDMQGXzBqhpRRj2FwVd38nAvyRWq4UY+c8K1TZuAEmtFmLsX9RqOxn8l2RZL8Lof2aw+qDJnyKQoKTUdjIBQMotwgxAZri+cQOourDxHEAlniyfmTaXcjZtLu4mhixGBCnq2qIOPmpenG6ufVVa9Fai5a5oOMnl1JoOd+RcQd9yh6kFHdEyvuRRvEIjwMCfPCafMz6FoD/5mbPhGxie0gRsa+jG0o4C2HYD/DL84m601KPt9mFYWfgp3mb/s1EQmjBZhnVGV6f0qM4vjs9bx91e+kGDVwWec0fOCfIdgBv8UftZu8dz4aqVaKGVItWUmlaVyHc3DRMa1+DKDr+9/Kl4QNsj1iFDIWkPCp02u88uO68vXnU6zcPO8eqqSWupJue/r+QfrqOQUqS+UtZSTc19X/3gU3UtjbQCddYPPtXW0q26B91a7fNW5/jo9Rq9JvJPP62uo5e+R7026juiob6OhrW846yS9QIWCqBBJe1izNwGiYJzF5xSrzZ+Hi85pb5NVK9A1r4S9aLFu2Spdcdy4Wm02pus4nWB10PP/Ch3MPI8HwYBSdWlYgRhMURqGNUA3+Ijy2/wzcveWSgCbWXORL71M+RiYDf4jy8veu2TVzz3hohtkJ8OmxfHnXayUNeEoE+8qvRKXasfyx11YbL10Yfg+gJiTHLQmw5ZqfwS+f0G/8nx8YvXL8/Oj/jwURe585+OrT4an/meCcI1ztcQei8tbHbhW5z8QFQPlfbAEB6SAg/hAPlhE5JFxy994DX4w/Pj5ieReMSOyEJ4Ih1sBhZwj6NV8OFdd+TEuuzUEXeAP7Tcpx+ZRt1yMXQx9wbYo2h5/qzbbRp1Gw6ykvjEVDLSeD58k5HEhW+XllJJS2/WSTPHDYqnsRcVQtcnrh5KsJZZGBqSjcVkb8a8jUzR8vgkrA5vk6g6uu8hL3V3iDBGTsw+LjTCpNbQRT58TjVJcV/IXrNEJuaGyEjTHp/ngMco3zAie0RwZURWfCKTckNkzCPLFZE9qZLlIFmIVejmy8dIZ09EhayXy2ogvUQNVBxWkxmrMVabj1q6eaJsjoi8JU6T6OLKR9M6xSE0ZQmhEYNmjPZYGW0FvIpVsrI9E7KLk6VRq5BlF1m4nZ9oA1dE/b5CT1kly4oz22hxsnQb6WSBQVYbzU+0xTYqDrupzF1j5LZ5EFo0f+T7jUBL0zrF4TOyDIzxGeOzDfksPAuwHKDdCaVJJWqg4rBalbEaY7XNWa1MoN0Jq5VpLqU4rEa2AjBWY6y2IavJJQLtTlhNK1EDFYfVaozVGKttzmpqiUC7E1YjIXppWqg4tEZ2TDBeY7y2Ka+VyRnZDa+VKUovEK/N7CcQ98dr5+1np70csBrbTrDFRfOLZxT2glg1VzsKpII0ToHobGZXgcTcNOamPbpNQGx7VAmYjO0kYEy2KV7peZqZiFWFx8lm4SfHi+a6loHTlm0mYJzGOO1R+CDMO9sak8n7o7L87Bxg53DkisrYfACbDyiwi8Z2EDAXbVNHRN1e2Lk4+Cp05ClsMfJcTJB5ZrY9umwF3kZw+fyQuHgRuU0O8mTkxsiNkRsjN15kuwkYtT0uapO+v8UcRaW2xU1UJGpjWwoYtc0fSpKrqwwlFZPetjbeVqXfLS4rxZXCe6NffmMUxyhuDsVperW0FCdsi+LkqlJiihPKQHH5+XABo7icUZyua6WluK15cVXykfTSUlwpvDj2SQNGcYsC1UUn3DKKSwWqi464ZRSXF4pjuxIYxS2iOLL5jlFcxtrARYeYM4rLC8WxTQqM4hZQnCqLjOKyKE7QWKCac4rLz+YFRnH5ojhF0lY7pe0xU5yuSiue1MYobl8Ux/YxMIpbQHFCjU03ZFKcWGNeXM4prsD7GRjF7XjRiDDv22yM4qYCVYkc6sooLs8Ux3Y1MIpbNN2wyueUHzvFKat8VZlR3D4pju1uYBS3yIsr73SDtK0Px1elMk83LG6mXFPc5Bp5hEtgQGUL8I0NA87C0Gm5mB42MvmdsiGhqrAhmudNniPQavC377747pdffnj/c56D7rBLf+si3wE2wTupJdZRIawH/MkPIs+RPrkgFUwI1gbusH1EuluReM5GxvUJ8hO0p+UR58rz7fvbb96nhJkR454U94UQ1xFCmifEh3df3/3hC05cLIY6I4ZwXwxpHTHkJWJIi8XQssWQ1xFDWSKGvFiMarYYyjpiqEvEUBaLoWeLoa4jhrZEDHWxGFK2GNo6YlSXiKEtFqOWLUZ1HTH0JWJUF4tBxgGy5NDXkaM2T467f/4vd/uv33z3VZo6XoAh5EKvbUaoWZmk+zLV1qKy+dz6j/e3f/vm9u+/W9I64owk8hw+W49V59Lqh3e/uPvLfxbLIc+IocwRYy1epYfF3xfjv9/f/u0/d//z57tff7VYGGGFNlmLXel5z/eE+e7zr7chyVoES09pvW+9v/nq7rd/3IYwa9EsPWfxvjDv/u/uy1/dfvvvD+/fLTHcWZZT50iTxbaVxG8Jr3046FhB6JUayPEAtq5seISMkUPcUgz8IcQvfDT0gUOdNkkQfxK6OTa4QSPcijJZtoVvogruF0Qz9JFx5mELJd7iteUOEOcBbIbKDmHbNaFP3EORhIoIuwhPfksUmC4I+8C4NkwwhC3kDqwhN7DBMGjwqhanJ3He0/8HUEsDBBQAAAAIAEpiSF2B5REjUAEAAL8DAAAMAAAAc2V0dGluZ3MueG1srdPBahsxEAbgVxFzt3c3EBLEakOaYJxDWtO4tM1tujv2CmtnhDSO4z59setCaBNI45yExK9P/2FUXzwOwTxQyl7YQTUuwRC30nleOvgyn4zOwWRF7jAIk4MtZTAXTd2jnX6dXcYYfIvqhe9I1fPSPA6Bs+3RQa8abVFsNptxj9zKMG5lvEpFv4lDKE7KqiowRjjcaIUXfulgndgKZp8t40DZamslEnfSrgditU/Tdtd33+UKE+lMst9VMcFnvbn+TAsHJyWYiAkP2+oMTJTs4BSKpj4ov5eRVxpGmdTsHnYwS571hhcCzwWfhi7XKhMR/ShKYHQbycEPkUDI0CwwZKqLf4XXqFPC7n3VW9Jeuj9e7iUpNOV/Sp8eKAWMd/4nHSntO10libeYVkdaHzx3lKYSaL6Nxxa7Fxm+/WVU5VuU769VnjncjWNTFy99tuYXUEsDBBQAAAAIAEpiSF0nlsLdDAEAAGMDAAAWAAAATUVUQS1JTkYvY29udGFpbmVyLnJkZrWQwU6DQBCGX4VMz7CAibEE6EFCPJqqD7AuQyHdnSU7W6Fvb0o9aNOYVNvjTrLf9+XPV5PRwQc67i0VkEQxBEjKNj1tCnh7rcMHCNhLaqS2hAXskSFYlblr2mxd1cFkNHHmmraAzvshE2Icx2i8i6zbiGS5XIo4FWkauqYNeU9eTiHxAo6AClm5fvC9peDwlu925wuAMieOs07ys3T+S0Ec/1B0kpQ1kbLR1oluHIwWaZzcC4NeimG7WcCMdMh25xQW8GjJI3kWHcoGXTQZDaLMxUnIr2XnGMcPfj/gifCS2KeZV/caL2668VqM6mCM/7cXf6dcZbGXI/Gvk12hoLJqZ5D8ef18WVd1+QlQSwMEFAAAAAgASmJIXf5UDsupAgAAfwcAABQAAABDb250ZW50cy9jb250ZW50LmhwZp2VsW7bMBCG9wJ9B4JzZUp24iRC5Awpii7dkqXbhTxJrCWSJanY3lOgQNcMRZsUfYDOnfJG0UMUsi3bsRtXKLSI1P/9dzzxyNOzaVmQa7ROapXQqBdSgoprIVWW0MuLN8ExJc6DElBohQmdoaPkbHSqTRob4GPIkEzLQrk4h4Tm3puYsclk0stBcV32uO6NLcsnpixYP4wiBsbQljCdCAMWMgsmX3NR2IEc/oV0nSI65F5qtaJ4J4priysk74TkCGKNdEsul85rO1thZSeqBOfRBgaydY4mfR51PMcSlhFN2jJiXQpT2aKnbcYEZ1hgico7FvUi1mr1lr8UJp0D/TA8Ytqka6WelgXPwfpOv3UtXy1lYiolfTPXyeHtxFwq6c9zsK0Fmupqb7quVXKtUpkltLIq1uCkixWU6GLPY21QCc2rphjxpjqed9aqzyiplPxYYSAFKi9TibaZlCKhdNFbJXoQ4GEx8tIXyBbvBaisggxHY33KnkysQNIklFBuEby2lHCtPCqfUI9TT9mO0FVXH5D7fwsFOm6lWTTHU3FTnNgZ4JhQY9GhvUY6evmieRZ5Nj47jgU47+Aar2bbhqP67mf941d9c7cHP2+WiOI1eNzh+2E4DMKDoD+46A/igzAeHL7fY/VOi+ZHPOfVHwbhSTAIL8Jh3D+KD4f7vMQz+Rw8frohh/X3WxKd1PcPpP78tf52W98/vCJRVH+5I4fHj79v9hiPcTbRVnQv/qYX291YJSiZovOLkfRYzjdhcy6hpSS3mCb0fBHLzY8rtL1pWVBSopAQ+JnBhIIxheTQbAvWfGRbdsvzNNwxdMsP/2PpvVSZay3bcSenRSGeLN0ZqZYd1MSwmBIp5s5tLQqpsDlemhtwI5sN5XqZW9p5vGWE+fvy5hz9AVBLAwQUAAAACABKYkhdH5gl1AgBAADbAQAAFgAAAE1FVEEtSU5GL2NvbnRhaW5lci54bWx9kMFqQjEQRX8lZFteol2VYCylVOiixYX9gJA3zwSTmZCMvuffF7UVLNTlhTnnXmbxPOUkDlBbJLRyrmZSAHrqI26t/NqsuicpGjvsXSIEK4/QpHheLsgPxhOyiwhVTDlhM+QHK/cVDbkWm0GXoRn2hgpgT36fAdlcTq+o/GFDGawMzMVoPY6jCg49ZeVJ7apuPkB2+nE2n+tQBnmpr0Q8xATtNophn1JXHAcrXwkZkJs+9QGyOtEiQx9dx8cCVrpSUvSOI6EOY8kn0u/cFh6mnKT+X72ucIgw6nU9bGBixRPfmhkm1iW5iPc0H2+bl+79c3VeeP6Iqv2djbUffpfpP08456tm+Q1QSwMEFAAAAAgASmJIXW8r4FxxAAAAhgAAABUAAABNRVRBLUlORi9tYW5pZmVzdC54bWw1zUsKwzAMRdGtGM37mxURJ7OuoF2AseVisJ9K5IR096WEzO/hDtPWqltltqLwdDtfyQmipoK3p9fzcbqTsx6QQlWIp68YuWkcNGVuASWLdbe1CmNN2dMygzVYMUZoYtwj60eQNC5N0HlPD8n/4WX8AVBLAQIUABQAAAAAAEpiSF2C8EFHEwAAABMAAAAIAAAAAAAAAAAAAACAAQAAAABtaW1ldHlwZVBLAQIUABQAAAAIAEpiSF1lDQ+e5wAAADYBAAALAAAAAAAAAAAAAACAATkAAAB2ZXJzaW9uLnhtbFBLAQIUABQAAAAIAEpiSF3GaSqGIhEAAG9PAQATAAAAAAAAAAAAAACAAUkBAABDb250ZW50cy9oZWFkZXIueG1sUEsBAhQAFAAAAAgASmJIXYHlESNQAQAAvwMAAAwAAAAAAAAAAAAAAIABnBIAAHNldHRpbmdzLnhtbFBLAQIUABQAAAAIAEpiSF0nlsLdDAEAAGMDAAAWAAAAAAAAAAAAAACAARYUAABNRVRBLUlORi9jb250YWluZXIucmRmUEsBAhQAFAAAAAgASmJIXf5UDsupAgAAfwcAABQAAAAAAAAAAAAAAIABVhUAAENvbnRlbnRzL2NvbnRlbnQuaHBmUEsBAhQAFAAAAAgASmJIXR+YJdQIAQAA2wEAABYAAAAAAAAAAAAAAIABMRgAAE1FVEEtSU5GL2NvbnRhaW5lci54bWxQSwECFAAUAAAACABKYkhdbyvgXHEAAACGAAAAFQAAAAAAAAAAAAAAgAFtGQAATUVUQS1JTkYvbWFuaWZlc3QueG1sUEsFBgAAAAAIAAgA9wEAABEaAAAAAA==";
-
-    function xmlEscape(s) {
-      return String(s == null ? "" : s)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-    }
-
-    function makeHwpxP(text, align, bold, sizePt) {
-      var paraId = (align === 'center') ? '13' : (align === 'right' ? '14' : '15');
-      var charId = bold ? '13' : '12';
-      return '<hp:p id="0" paraPrIDRef="' + paraId + '" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0">' +
-               '<hp:run charPrIDRef="' + charId + '"><hp:t>' + xmlEscape(text) + '</hp:t></hp:run>' +
-             '</hp:p>';
-    }
-
-    function makeHwpxCell(col, row, colSpan, rowSpan, widthHwp, text, isHeader, align) {
-      var alignVal = align || (isHeader ? 'center' : 'center');
-      var borderFillId = isHeader ? '3' : '2';
-      var bold = isHeader ? true : false;
-      return '<hp:tc borderFillIDRef="' + borderFillId + '" hasMargin="0">' +
-               '<hp:cellAddr colAddr="' + col + '" rowAddr="' + row + '" />' +
-               '<hp:cellSpan colSpan="' + colSpan + '" rowSpan="' + rowSpan + '" />' +
-               '<hp:cellSz width="' + widthHwp + '" height="1500" />' +
-               '<hp:subList id="" textDirection="HORIZONTAL" lineWrap="BREAK" vertAlign="CENTER">' +
-                 makeHwpxP(text, alignVal, bold, 10) +
-               '</hp:subList>' +
-             '</hp:tc>';
-    }
-
-    function buildHwpxSection0Xml(p) {
-      var colWidths = [4215, 1321, 1321, 1321, 2542, 3960, 3960, 4527, 1981, 1981, 1981, 1981, 1981, 1981, 1414, 1414, 4243, 4243, 4527];
-      function sumW(startCol, count) {
-        var s = 0;
-        for (var i = startCol; i < startCol + count; i++) s += colWidths[i];
-        return s;
-      }
-
-      var xml = '<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<hs:sec xmlns:ha="http://www.hancom.co.kr/hwpml/2011/app" xmlns:hp="http://www.hancom.co.kr/hwpml/2011/paragraph" xmlns:hp10="http://www.hancom.co.kr/hwpml/2016/paragraph" xmlns:hs="http://www.hancom.co.kr/hwpml/2011/section" xmlns:hc="http://www.hancom.co.kr/hwpml/2011/core" xmlns:hh="http://www.hancom.co.kr/hwpml/2011/head">\n' +
-        '  <hp:p id="0" paraPrIDRef="15" styleIDRef="8" pageBreak="0" columnBreak="0" merged="0">\n' +
-        '    <hp:run charPrIDRef="0">\n' +
-        '      <hp:secPr id="" textDirection="HORIZONTAL" spaceColumns="1134" tabStop="8000" tabStopVal="4000" tabStopUnit="HWPUNIT" outlineShapeIDRef="0" memoShapeIDRef="0" textVerticalWidthHead="0" masterPageCnt="0">\n' +
-        '        <hp:grid lineGrid="0" charGrid="0" wonggojiFormat="0" />\n' +
-        '        <hp:startNum pageStartsOn="BOTH" page="0" pic="0" tbl="0" equation="0" />\n' +
-        '        <hp:visibility hideFirstHeader="0" hideFirstFooter="0" hideFirstMasterPage="0" border="SHOW_ALL" fill="SHOW_ALL" hideFirstPageNum="0" hideFirstEmptyLine="0" showLineNumber="0" />\n' +
-        '        <hp:pagePr landscape="WIDELY" width="59528" height="84188" gutterType="LEFT_ONLY">\n' +
-        '          <hp:margin header="2836" footer="2836" gutter="0" left="4252" right="4252" top="2836" bottom="2836" />\n' +
-        '        </hp:pagePr>\n' +
-        '      </hp:secPr>\n' +
-        '    </hp:run>\n' +
-        '  </hp:p>\n';
-
-      // 1. 결재란 표 (교무부장, 교감)
-      xml += '  <hp:p id="1" paraPrIDRef="14" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0">\n';
-      xml += '    <hp:run charPrIDRef="0">\n';
-      xml += '      <hp:tbl id="101" zOrder="0" numberingType="TABLE" textWrap="TOP_AND_BOTTOM" textFlow="BOTH_SIDES" lock="0" dropcapstyle="None" pageBreak="CELL" repeatHeader="0" rowCnt="2" colCnt="3" cellSpacing="0" borderFillIDRef="2" noAdjust="0">\n';
-      xml += '        <hp:sz width="12132" widthRelTo="ABSOLUTE" height="5668" heightRelTo="ABSOLUTE" protect="0" />\n';
-      xml += '        <hp:pos treatAsChar="1" affectLSpacing="0" flowWithText="1" allowOverlap="0" holdAnchorAndSO="0" vertRelTo="PARA" horzRelTo="COLUMN" vertAlign="TOP" horzAlign="RIGHT" vertOffset="0" horzOffset="0" />\n';
-      xml += '        <hp:tr>\n';
-      xml += '          <hp:tc borderFillIDRef="2" hasMargin="0"><hp:cellAddr colAddr="0" rowAddr="0" /><hp:cellSpan colSpan="1" rowSpan="2" /><hp:cellSz width="2835" height="5668" /><hp:subList id="" textDirection="HORIZONTAL" lineWrap="BREAK" vertAlign="CENTER"><hp:p id="0" paraPrIDRef="13" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="13"><hp:t>결재</hp:t></hp:run></hp:p></hp:subList></hp:tc>\n';
-      xml += '          <hp:tc borderFillIDRef="2" hasMargin="0"><hp:cellAddr colAddr="1" rowAddr="0" /><hp:cellSpan colSpan="1" rowSpan="1" /><hp:cellSz width="4648" height="1700" /><hp:subList id="" textDirection="HORIZONTAL" lineWrap="BREAK" vertAlign="CENTER"><hp:p id="0" paraPrIDRef="13" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="13"><hp:t>교무부장</hp:t></hp:run></hp:p></hp:subList></hp:tc>\n';
-      xml += '          <hp:tc borderFillIDRef="2" hasMargin="0"><hp:cellAddr colAddr="2" rowAddr="0" /><hp:cellSpan colSpan="1" rowSpan="1" /><hp:cellSz width="4649" height="1700" /><hp:subList id="" textDirection="HORIZONTAL" lineWrap="BREAK" vertAlign="CENTER"><hp:p id="0" paraPrIDRef="13" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="13"><hp:t>교 감</hp:t></hp:run></hp:p></hp:subList></hp:tc>\n';
-      xml += '        </hp:tr>\n';
-      xml += '        <hp:tr>\n';
-      xml += '          <hp:tc borderFillIDRef="2" hasMargin="0"><hp:cellAddr colAddr="1" rowAddr="1" /><hp:cellSpan colSpan="1" rowSpan="1" /><hp:cellSz width="4648" height="3968" /><hp:subList id="" textDirection="HORIZONTAL" lineWrap="BREAK" vertAlign="CENTER"><hp:p id="0" paraPrIDRef="13" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="12"><hp:t></hp:t></hp:run></hp:p></hp:subList></hp:tc>\n';
-      xml += '          <hp:tc borderFillIDRef="2" hasMargin="0"><hp:cellAddr colAddr="2" rowAddr="1" /><hp:cellSpan colSpan="1" rowSpan="1" /><hp:cellSz width="4649" height="3968" /><hp:subList id="" textDirection="HORIZONTAL" lineWrap="BREAK" vertAlign="CENTER"><hp:p id="0" paraPrIDRef="13" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="12"><hp:t></hp:t></hp:run></hp:p></hp:subList></hp:tc>\n';
-      xml += '        </hp:tr>\n';
-      xml += '      </hp:tbl>\n';
-      xml += '    </hp:run>\n';
-      xml += '  </hp:p>\n';
-
-      // 2. 제목
-      xml += '  <hp:p id="2" paraPrIDRef="13" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0">\n';
-      xml += '    <hp:run charPrIDRef="14"><hp:t>수  업 ( 교체ㆍ보강 )  계  획  서</hp:t></hp:run>\n';
-      xml += '  </hp:p>\n';
-      xml += '  <hp:p id="3" paraPrIDRef="13" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="12"><hp:t></hp:t></hp:run></hp:p>\n';
-
-      // 3. 메인 표
-      xml += '  <hp:p id="4" paraPrIDRef="13" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0">\n';
-      xml += '    <hp:run charPrIDRef="0">\n';
-      xml += '      <hp:tbl id="102" zOrder="0" numberingType="TABLE" textWrap="TOP_AND_BOTTOM" textFlow="BOTH_SIDES" lock="0" dropcapstyle="None" pageBreak="CELL" repeatHeader="1" rowCnt="12" colCnt="19" cellSpacing="0" borderFillIDRef="2" noAdjust="0">\n';
-      xml += '        <hp:sz width="50880" widthRelTo="ABSOLUTE" height="35000" heightRelTo="ABSOLUTE" protect="0" />\n';
-      xml += '        <hp:pos treatAsChar="1" affectLSpacing="0" flowWithText="1" allowOverlap="0" holdAnchorAndSO="0" vertRelTo="PARA" horzRelTo="COLUMN" vertAlign="TOP" horzAlign="CENTER" vertOffset="0" horzOffset="0" />\n';
-
-      // 1행
-      xml += '        <hp:tr>\n';
-      xml += makeHwpxCell(0, 0, 2, 1, sumW(0, 2), '교 과', true);
-      xml += makeHwpxCell(2, 0, 4, 1, sumW(2, 4), p.category, false);
-      xml += makeHwpxCell(6, 0, 3, 1, sumW(6, 3), '과 목', true);
-      xml += makeHwpxCell(9, 0, 4, 1, sumW(9, 4), p.subjectA, false);
-      xml += makeHwpxCell(13, 0, 4, 1, sumW(13, 4), '담당 교사', true);
-      xml += makeHwpxCell(17, 0, 2, 1, sumW(17, 2), p.teacherA, false);
-      xml += '        </hp:tr>\n';
-
-      // 2행
-      xml += '        <hp:tr>\n';
-      xml += makeHwpxCell(0, 1, 3, 1, sumW(0, 3), '결강 사유', true);
-      xml += makeHwpxCell(3, 1, 8, 1, sumW(3, 8), p.reason, false);
-      xml += makeHwpxCell(11, 1, 4, 1, sumW(11, 4), '일 시', true);
-      xml += makeHwpxCell(15, 1, 4, 1, sumW(15, 4), p.shortDateA, false);
-      xml += '        </hp:tr>\n';
-
-      // 3행
-      xml += '        <hp:tr>\n';
-      xml += makeHwpxCell(0, 2, 8, 1, sumW(0, 8), '변경 전', true);
-      xml += makeHwpxCell(8, 2, 2, 2, sumW(8, 2), '구분', true);
-      xml += makeHwpxCell(10, 2, 9, 1, sumW(10, 9), '변경 후', true);
-      xml += '        </hp:tr>\n';
-
-      // 4행
-      xml += '        <hp:tr>\n';
-      xml += makeHwpxCell(0, 3, 1, 1, colWidths[0], '일자', true);
-      xml += makeHwpxCell(1, 3, 3, 1, sumW(1, 3), '학반', true);
-      xml += makeHwpxCell(4, 3, 1, 1, colWidths[4], '교시', true);
-      xml += makeHwpxCell(5, 3, 2, 1, sumW(5, 2), '과목', true);
-      xml += makeHwpxCell(7, 3, 1, 1, colWidths[7], '교사명', true);
-      xml += makeHwpxCell(10, 3, 2, 1, sumW(10, 2), '일자', true);
-      xml += makeHwpxCell(12, 3, 2, 1, sumW(12, 2), '학년반', true);
-      xml += makeHwpxCell(14, 3, 2, 1, sumW(14, 2), '교시', true);
-      xml += makeHwpxCell(16, 3, 2, 1, sumW(16, 2), '과목', true);
-      xml += makeHwpxCell(18, 3, 1, 1, colWidths[18], '교사명', true);
-      xml += '        </hp:tr>\n';
-
-      // 5행: 첫 데이터
-      xml += '        <hp:tr>\n';
-      xml += makeHwpxCell(0, 4, 1, 1, colWidths[0], p.shortDateA, false);
-      xml += makeHwpxCell(1, 4, 3, 1, sumW(1, 3), p.cls, false);
-      xml += makeHwpxCell(4, 4, 1, 1, colWidths[4], String(p.periodA), false);
-      xml += makeHwpxCell(5, 4, 2, 1, sumW(5, 2), p.subjectA, false);
-      xml += makeHwpxCell(7, 4, 1, 1, colWidths[7], p.teacherA, false);
-      xml += makeHwpxCell(8, 4, 2, 1, sumW(8, 2), p.typeLabel, true);
-      if (p.isSwap) {
-        xml += makeHwpxCell(10, 4, 2, 1, sumW(10, 2), p.shortDateB, false);
-        xml += makeHwpxCell(12, 4, 2, 1, sumW(12, 2), p.cls, false);
-        xml += makeHwpxCell(14, 4, 2, 1, sumW(14, 2), String(p.periodB), false);
-        xml += makeHwpxCell(16, 4, 2, 1, sumW(16, 2), p.subjectB, false);
-        xml += makeHwpxCell(18, 4, 1, 1, colWidths[18], p.teacherB, false);
-      } else {
-        xml += makeHwpxCell(10, 4, 2, 1, sumW(10, 2), p.shortDateA, false);
-        xml += makeHwpxCell(12, 4, 2, 1, sumW(12, 2), p.cls, false);
-        xml += makeHwpxCell(14, 4, 2, 1, sumW(14, 2), String(p.periodA), false);
-        xml += makeHwpxCell(16, 4, 2, 1, sumW(16, 2), p.subjectA, false);
-        xml += makeHwpxCell(18, 4, 1, 1, colWidths[18], p.teacherB, false);
-      }
-      xml += '        </hp:tr>\n';
-
-      // 6~11행: 빈 행
-      for (var r = 5; r <= 10; r++) {
-        xml += '        <hp:tr>\n';
-        xml += makeHwpxCell(0, r, 1, 1, colWidths[0], '', false);
-        xml += makeHwpxCell(1, r, 3, 1, sumW(1, 3), '', false);
-        xml += makeHwpxCell(4, r, 1, 1, colWidths[4], '', false);
-        xml += makeHwpxCell(5, r, 2, 1, sumW(5, 2), '', false);
-        xml += makeHwpxCell(7, r, 1, 1, colWidths[7], '', false);
-        xml += makeHwpxCell(8, r, 2, 1, sumW(8, 2), '', false);
-        xml += makeHwpxCell(10, r, 2, 1, sumW(10, 2), '', false);
-        xml += makeHwpxCell(12, r, 2, 1, sumW(12, 2), '', false);
-        xml += makeHwpxCell(14, r, 2, 1, sumW(14, 2), '', false);
-        xml += makeHwpxCell(16, r, 2, 1, sumW(16, 2), '', false);
-        xml += makeHwpxCell(18, r, 1, 1, colWidths[18], '', false);
-        xml += '        </hp:tr>\n';
-      }
-
-      // 12행: 비고란
-      xml += '        <hp:tr>\n';
-      xml += makeHwpxCell(0, 11, 19, 1, 50880, '보강 및 대체 보강시 수업자료 : 유인물, 활동지, 교과서 속 형성평가 등..', false, 'left');
-      xml += '        </hp:tr>\n';
-
-      xml += '      </hp:tbl>\n';
-      xml += '    </hp:run>\n';
-      xml += '  </hp:p>\n';
-
-      // 4. 하단 각주
-      xml += '  <hp:p id="5" paraPrIDRef="15" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0">\n';
-      xml += '    <hp:run charPrIDRef="12"><hp:t>※ 결강 기간과 보강, 교체내역에 따라 표를 적절히 편집하여 사용가능.</hp:t></hp:run>\n';
-      xml += '  </hp:p>\n';
-      xml += '</hs:sec>';
-
-      return xml;
-    }
-
-    function downloadHwpx() {
-      if (!currentConfirmedData) {
-        alert("먼저 교체 또는 보강 후보를 선택하여 계획서를 생성해주세요.");
-        return;
-      }
-      if (typeof JSZip === "undefined") {
-        alert("HWPX 생성 라이브러리(JSZip)를 로드하는 중입니다. 인터넷 연결을 확인하거나 잠시 후 다시 시도해 주세요.");
-        return;
-      }
-
-      var btn = document.getElementById('btnDownloadHwpx');
-      if (btn) {
-        btn.disabled = true;
-        btn.innerText = "⏳ 생성중...";
-      }
-
-      try {
-        var d = currentConfirmedData;
-        var isSwap = (d.type === "수업교체");
-        var parsedA = splitSubjClass(d.classA);
-        var parsedB = splitSubjClass(d.classB);
-
-        var category = document.getElementById('formCategory').value.trim() || deduceSubjectCategory(parsedA.subj);
-        var cls = document.getElementById('formClass').value.trim() || parsedA.cls;
-        var subjectA = document.getElementById('formSubject').value.trim() || parsedA.subj;
-        var periodA = document.getElementById('formPeriodA').value.trim() || d.periodA;
-        var subjectB = document.getElementById('formSubjectB').value.trim() || parsedB.subj || subjectA;
-        var periodB = document.getElementById('formPeriodB').value.trim() || d.periodB;
-        var teacherA = document.getElementById('formTeacherA').value.trim() || d.teacherA;
-        var teacherB = document.getElementById('formTeacherB').value.trim() || d.teacherB;
-        var shortDateA = formatShortDate(d.dateA);
-        var shortDateB = formatShortDate(d.dateB);
-        var typeLabel = isSwap ? "교체" : "보강";
-        var reason = d.reason || document.getElementById('reasonSelect').value;
-
-        var section0Xml = buildHwpxSection0Xml({
-          category: category,
-          subjectA: subjectA,
-          teacherA: teacherA,
-          reason: reason,
-          shortDateA: shortDateA,
-          shortDateB: shortDateB,
-          typeLabel: typeLabel,
-          cls: cls,
-          periodA: periodA,
-          subjectB: subjectB,
-          periodB: periodB,
-          teacherB: teacherB,
-          isSwap: isSwap
-        });
-
-        var zip = new JSZip();
-        zip.loadAsync(HWPX_TEMPLATE_BASE64, { base64: true }).then(function(loadedZip) {
-          loadedZip.file("Contents/section0.xml", section0Xml);
-          return loadedZip.generateAsync({ type: "blob", mimeType: "application/hwp+zip" });
-        }).then(function(blob) {
-          var fileName = "수업(" + typeLabel + ")계획서_" + teacherA + "T_" + (d.dateA || "") + ".hwpx";
-          var url = URL.createObjectURL(blob);
-          var a = document.createElement("a");
-          a.href = url;
-          a.download = fileName;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-
-          if (btn) {
-            btn.disabled = false;
-            btn.innerText = "📥 HWPX 다운로드";
-          }
-        }).catch(function(err) {
-          alert("HWPX 파일 생성 중 오류가 발생했습니다: " + err.message);
-          if (btn) {
-            btn.disabled = false;
-            btn.innerText = "📥 HWPX 다운로드";
-          }
-        });
-
-      } catch (e) {
-        alert("오류 발생: " + e.message);
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = "📥 HWPX 다운로드";
-        }
-      }
-    }
-
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 
@@ -1008,7 +732,7 @@
     </div>
   </div>
 
-  <script src="engine.js?v=20261020"></script>
+  <script src="engine.js?v=26769324"></script>
   <script>
 /* ═══════════════════════════════════════════════════════════════
    데이터 레이어 (GitHub 정적 버전 v1.2)
@@ -1074,17 +798,44 @@ function decodeCSVBuffer(buf) {
 
 function loadTimetableOnStart() {
   fetch("timetable.csv?ts=" + Date.now()).then(function(r) {
-    if (!r.ok) throw new Error("no csv");
+    if (!r.ok) throw new Error("HTTP " + r.status + " (" + r.statusText + ")");
     return r.arrayBuffer();
   }).then(function(buf) {
     var t = decodeCSVBuffer(buf);
     rebuildEngine(t);
     GB.isSample = isSampleCSV(t);
     updateDataBanner();
-  }).catch(function() {
+  }).catch(function(err) {
+    console.error("시간표 로드 실패:", err);
     GB.loaded = false;
-    updateDataBanner();
+    var banner = document.getElementById('dataBanner');
+    if (banner) {
+      banner.style.display = 'block';
+      banner.className = 'data-banner warn';
+      var errMsg = (err && err.message) ? err.message : "";
+      if (location.protocol === "file:") {
+        banner.innerHTML = "⚠️ 로컬 파일(file://)로 여셨습니다. 브라우저 보안 규정상 시간표(timetable.csv)를 자동으로 읽을 수 없으니 GitHub 주소로 접속하시거나 아래에서 파일을 직접 선택해주세요. " +
+          "<label class='btn btn-sm btn-white' style='margin-left:8px; cursor:pointer;'><input type='file' accept='.csv' style='display:none;' onchange='loadLocalCSVFile(this)'>📁 timetable.csv 선택</label>";
+      } else {
+        banner.innerHTML = "⚠️ 시간표 데이터를 불러오지 못했습니다. (" + escapeHtml(errMsg) + ") " +
+          "<label class='btn btn-sm btn-white' style='margin-left:8px; cursor:pointer;'><input type='file' accept='.csv' style='display:none;' onchange='loadLocalCSVFile(this)'>📁 시간표 직접 선택</label>";
+      }
+    }
   });
+}
+
+function loadLocalCSVFile(input) {
+  if (!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var buf = e.target.result;
+    var t = decodeCSVBuffer(buf);
+    rebuildEngine(t);
+    GB.isSample = isSampleCSV(t);
+    updateDataBanner();
+  };
+  reader.readAsArrayBuffer(file);
 }
 
     /* ═══════════════════════════
@@ -1841,6 +1592,312 @@ function loadTimetableOnStart() {
       html += "</table></div>";
       return html;
     }
+
+  /* ═══════════════════════════════════════════════════════════════
+   결보강 탐색 엔진 (GitHub Pages 정적 버전 v2)
+   - 서버 없음: 모든 탐색·시뮬레이션이 브라우저에서 동작
+   - 원본 시간표 기준 정적 판단 수행
+   - [v2 업데이트] 과목별 교과군 판별 및 교사별 주 교과군 자동 매핑
+   - [v2 업데이트] 보강 후보 탐색 시 결강 과목과 동일 교과군 교사 우선 정렬
+   ═══════════════════════════════════════════════════════════════ */
+
+const DAY_IDX = { "월": 1, "화": 2, "수": 3, "목": 4, "금": 5 };
+
+function extractClassName(text) {
+  const t = String(text || "").trim();
+  const m = t.match(/(\d+\s*-\s*\d+)/);
+  return m ? m[1].replace(/\s+/g, "") : t;
+}
+
+function splitClassName(className) {
+  const t = String(className || "");
+  const m = t.match(/(\d+\s*-\s*\d+/);
+  if (m) {
+    const cls = m[1].replace(/\s+/g, "");
+    const subj = t.slice(0, m.index).replace(/[-–—\s]+$/, "").trim() || t;
+    return { subj: subj, cls: cls };
+  }
+  return { subj: t, cls: "" };
+}
+
+/* 과목명 기반 교과군 판별 */
+function deduceSubjectCategory(subj) {
+  if (!subj) return "교과";
+  subj = String(subj);
+  if (subj.includes("국어") || subj.includes("문학") || subj.includes("심국") || subj.includes("독서") || subj.includes("화작") || subj.includes("언매")) return "국어";
+  if (subj.includes("수학") || subj.includes("미적") || subj.includes("기하") || subj.includes("수통") || subj.includes("수적") || subj.includes("확통")) return "수학";
+  if (subj.includes("영어") || subj.includes("영Ⅱ") || subj.includes("심영") || subj.includes("미영") || subj.includes("영회")) return "영어";
+  if (subj.includes("물") || subj.includes("화") || subj.includes("생") || subj.includes("지") || subj.includes("과") || subj.includes("통과")) return "과학";
+  if (subj.includes("역사") || subj.includes("한국") || subj.includes("사회") || subj.includes("통사") || subj.includes("세지") || subj.includes("정법") || subj.includes("윤리") || subj.includes("경제")) return "사회";
+  if (subj.includes("정보") || subj.includes("프로") || subj.includes("공일") || subj.includes("기술") || subj.includes("가정") || subj.includes("인공지능")) return "기술·가정";
+  if (subj.includes("체육") || subj.includes("운동") || subj.includes("스포츠")) return "체육";
+  if (subj.includes("음악") || subj.includes("미술") || subj.includes("연극")) return "예술";
+  if (subj.includes("한문") || subj.includes("일본") || subj.includes("중국") || subj.includes("제2외")) return "제2외국어/한문";
+  return "교과";
+}
+
+/* 시간표 데이터에서 교사별 최다 빈도 주 교과군 매핑 */
+function buildTeacherSubjectMap(scheduleList) {
+  const map = {};
+  const counts = {};
+  scheduleList.forEach(function(s) {
+    if (!s.teacher) return;
+    if (!counts[s.teacher]) counts[s.teacher] = {};
+    const cat = deduceSubjectCategory(s.className || s.subject);
+    counts[s.teacher][cat] = (counts[s.teacher][cat] || 0) + 1;
+  });
+  Object.keys(counts).forEach(function(t) {
+    let bestCat = "교과";
+    let maxCnt = 0;
+    Object.keys(counts[t]).forEach(function(cat) {
+      if (counts[t][cat] > maxCnt) {
+        maxCnt = counts[t][cat];
+        bestCat = cat;
+      }
+    });
+    map[t] = bestCat;
+  });
+  return map;
+}
+
+/* CSV 파서 (RFC4180 간이 구현: 따옴표·콤마·개행 처리) */
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  const clean = String(text || "").replace(/^\uFEFF/, "");
+  for (let i = 0; i < clean.length; i++) {
+    const c = clean[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (clean[i + 1] === '"') { field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === ",") { row.push(field); field = ""; }
+      else if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+      else if (c === "\r") { /* 무시 */ }
+      else field += c;
+    }
+  }
+  if (field !== "" || row.length > 0) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+/* 시트 2차원 배열 → 수업 리스트 파싱 (Code.gs와 동일 레이아웃) */
+function parseSheetValues(data) {
+  const teacherRow = data[3] || [];
+  const teachers = [];
+  for (let c = 2; c < teacherRow.length; c++) {
+    const name = String(teacherRow[c] || "").trim();
+    if (name) teachers.push({ colIndex: c, name: name });
+  }
+  const scheduleList = [];
+  let currentDay = "";
+  for (let r = 4; r < data.length; r++) {
+    const dayCell = String(data[r][0] || "").trim();
+    if (["월", "화", "수", "목", "금"].includes(dayCell)) currentDay = dayCell;
+    if (!currentDay) continue;
+    const periodCell = String(data[r][1] || "").trim();
+    const periodMatch = periodCell.match(/(\d+)/);
+    if (!periodMatch) continue;
+    const period = parseInt(periodMatch[1], 10);
+    teachers.forEach(function(t) {
+      const rawSubject = String(data[r][t.colIndex] || "").trim();
+      if (!rawSubject) return;
+      const rawClassroom = String((data[r + 1] || [])[t.colIndex] || "").trim();
+      const subject = rawSubject;
+      const classroom = rawClassroom;
+      let combinedName = subject;
+      if (classroom && !subject.includes(classroom)) combinedName = subject + "-" + classroom;
+      const pureClass = extractClassName(classroom) || extractClassName(subject);
+      scheduleList.push({
+        day: currentDay, period: period, teacher: t.name,
+        subject: subject, classroom: classroom,
+        className: combinedName, pureClass: pureClass
+      });
+    });
+    r++;
+  }
+  return scheduleList;
+}
+
+/* 교사별/요일별/교시 인덱스: { 교사명: { 요일: { 교시: true } } } */
+function buildScheduleIndex(scheduleList) {
+  const idx = {};
+  scheduleList.forEach(function(s) {
+    if (!idx[s.teacher]) idx[s.teacher] = {};
+    if (!idx[s.teacher][s.day]) idx[s.teacher][s.day] = {};
+    idx[s.teacher][s.day][s.period] = true;
+  });
+  return idx;
+}
+
+/* 공강 여부 (원본 시간표 기준, 대장 없음) */
+function isTeacherFree(scheduleIndex, teacher, day, period) {
+  return !(scheduleIndex[teacher] && scheduleIndex[teacher][day] && scheduleIndex[teacher][day][period]);
+}
+
+/* 연속수업 체크 (대장 없음) */
+function checkConsecutive(scheduleIndex, teacher, addDay, addPeriod, removeDay, removePeriod, limit) {
+  const dayPeriods = (scheduleIndex[teacher] && scheduleIndex[teacher][addDay]) || {};
+  let periods = Object.keys(dayPeriods).map(Number).filter(function(p) {
+    return !(addDay === removeDay && p === removePeriod);
+  });
+  if (periods.indexOf(addPeriod) < 0) periods.push(addPeriod);
+  periods.sort(function(a, b) { return a - b; });
+  for (let i = 0; i <= periods.length - limit; i++) {
+    let isSeq = true;
+    for (let k = 0; k < limit - 1; k++) {
+      if (periods[i + k + 1] !== periods[i + k] + 1) { isSeq = false; break; }
+    }
+    if (isSeq) return true;
+  }
+  return false;
+}
+
+function buildGridData(teacherLessons) {
+  const grid = {};
+  ["월", "화", "수", "목", "금"].forEach(function(d) {
+    grid[d] = {};
+    for (let p = 1; p <= 7; p++) grid[d][p] = "-";
+  });
+  teacherLessons.forEach(function(lesson) {
+    if (grid[lesson.day] && grid[lesson.day][lesson.period] !== undefined) {
+      grid[lesson.day][lesson.period] = lesson.className;
+    }
+  });
+  return grid;
+}
+
+/* 교체/보강 탐색 (대장 제외 버전) */
+function searchScheduleLocal(scheduleIndex, scheduleList, allTeachers, targetTeacher, targetDay, targetPeriod, consecutiveLimit, isSwap, isSub, subTargetTeacher) {
+  const targetLesson = scheduleList.find(function(s) {
+    return s.day === targetDay && s.period === targetPeriod && s.teacher === targetTeacher;
+  });
+  if (!targetLesson) {
+    return { success: false, message: "선택하신 시간에 해당 교사의 수업이 없습니다. (데이터: " + targetDay + " " + targetPeriod + "교시)" };
+  }
+  const targetClass = targetLesson.pureClass || targetLesson.className;
+  const targetCategory = deduceSubjectCategory(targetLesson.className || targetLesson.subject);
+  const teacherSubjectMap = buildTeacherSubjectMap(scheduleList);
+
+  let swapList = [];
+  let substituteList = [];
+
+  if (isSwap) {
+    const targetDayNum = DAY_IDX[targetDay] || 0;
+    scheduleList.forEach(function(lesson) {
+      const lessonClass = lesson.pureClass || lesson.className;
+      if (lessonClass === targetClass && lesson.teacher !== targetTeacher) {
+        const teacherB = lesson.teacher;
+        const dayB = lesson.day;
+        const periodB = lesson.period;
+        const candidateDayNum = DAY_IDX[dayB] || 0;
+        let isFutureOption = (candidateDayNum === targetDayNum) ? (periodB > targetPeriod) : true;
+        if (isFutureOption) {
+          const isBFreeAtTarget = isTeacherFree(scheduleIndex, teacherB, targetDay, targetPeriod);
+          const isAFreeAtCandidate = isTeacherFree(scheduleIndex, targetTeacher, dayB, periodB);
+          if (isBFreeAtTarget && isAFreeAtCandidate) {
+            let isValid = true;
+            if (consecutiveLimit > 0) {
+              if (checkConsecutive(scheduleIndex, teacherB, targetDay, targetPeriod, dayB, periodB, consecutiveLimit)) isValid = false;
+              else if (checkConsecutive(scheduleIndex, targetTeacher, dayB, periodB, targetDay, targetPeriod, consecutiveLimit)) isValid = false;
+            }
+            if (isValid) {
+              const bCat = teacherSubjectMap[teacherB] || deduceSubjectCategory(lesson.className || lesson.subject);
+              swapList.push({ teacherB: teacherB, dayB: dayB, periodB: periodB, classB: lesson.className, categoryB: bCat });
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (isSub) {
+    let targetCandidates = allTeachers;
+    if (subTargetTeacher) targetCandidates = allTeachers.filter(function(t) { return t === subTargetTeacher; });
+    targetCandidates.forEach(function(tName) {
+      if (tName !== targetTeacher && isTeacherFree(scheduleIndex, tName, targetDay, targetPeriod)) {
+        let isValid = true;
+        if (consecutiveLimit > 0 && checkConsecutive(scheduleIndex, tName, targetDay, targetPeriod, "", 0, consecutiveLimit)) isValid = false;
+        if (isValid) {
+          const candCategory = teacherSubjectMap[tName] || "교과";
+          const isSame = (candCategory === targetCategory);
+          substituteList.push({
+            teacherB: tName,
+            category: candCategory,
+            isSameSubject: isSame
+          });
+        }
+      }
+    });
+
+    // 동일 교과군 우선 정렬 -> 그 다음 교사명 가나다순
+    substituteList.sort(function(a, b) {
+      if (a.isSameSubject && !b.isSameSubject) return -1;
+      if (!a.isSameSubject && b.isSameSubject) return 1;
+      return a.teacherB.localeCompare(b.teacherB, 'ko');
+    });
+  }
+
+  return {
+    success: true,
+    targetClassName: targetLesson.className,
+    targetCategory: targetCategory,
+    swapData: swapList,
+    substituteData: substituteList
+  };
+}
+
+/* 공동 공강 탐색 (대장 제외 버전) */
+function findCommonFreeTimeLocal(scheduleIndex, teacherNames) {
+  const missingTeachers = teacherNames.filter(function(n) { return !scheduleIndex[n]; });
+  if (missingTeachers.length > 0) {
+    return { success: false, message: "다음 선생님의 시간표 데이터를 찾을 수 없습니다: " + missingTeachers.join(", ") };
+  }
+  const commonFreeTimes = [];
+  ["월", "화", "수", "목", "금"].forEach(function(d) {
+    for (let p = 1; p <= 7; p++) {
+      const allFree = teacherNames.every(function(tName) { return isTeacherFree(scheduleIndex, tName, d, p); });
+      if (allFree) commonFreeTimes.push({ day: d, period: p });
+    }
+  });
+  return { success: true, teachers: teacherNames, commonFreeTimes: commonFreeTimes };
+}
+
+/* 교체 시뮬레이션 */
+function simulateSwapLocal(scheduleList, teacherA, dayA, periodA, teacherB, dayB, periodB) {
+  const gridA_orig = buildGridData(scheduleList.filter(function(s) { return s.teacher === teacherA; }));
+  const gridB_orig = buildGridData(scheduleList.filter(function(s) { return s.teacher === teacherB; }));
+  const gridA_new = JSON.parse(JSON.stringify(gridA_orig));
+  const gridB_new = JSON.parse(JSON.stringify(gridB_orig));
+  gridA_new[dayB][periodB] = gridB_orig[dayB][periodB];
+  gridB_new[dayA][periodA] = gridA_orig[dayA][periodA];
+  return { success: true, teacherA_orig: gridA_orig, teacherA_new: gridA_new, teacherB_orig: gridB_orig, teacherB_new: gridB_new };
+}
+
+/* 보강 시뮬레이션 */
+function simulateSubstituteLocal(scheduleList, teacherB, dayA, periodA, classA) {
+  const gridB_orig = buildGridData(scheduleList.filter(function(s) { return s.teacher === teacherB; }));
+  const gridB_new = JSON.parse(JSON.stringify(gridB_orig));
+  gridB_new[dayA][periodA] = classA + "(보강)";
+  return { success: true, teacherB_orig: gridB_orig, teacherB_new: gridB_new };
+}
+
+/* 교사 시간표 조회 (정적) */
+function getTeacherTimetableLocal(scheduleList, teacherName) {
+  const lessons = scheduleList.filter(function(s) { return s.teacher === teacherName; });
+  if (lessons.length === 0) return { success: false, message: teacherName + " 선생님의 시간표 데이터가 없습니다." };
+  return { success: true, timetable: buildGridData(lessons) };
+}
+
+/* Node 테스트용 export */
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { deduceSubjectCategory, buildTeacherSubjectMap, parseCSV, parseSheetValues, buildScheduleIndex, isTeacherFree, checkConsecutive,
+    searchScheduleLocal, findCommonFreeTimeLocal, simulateSwapLocal, simulateSubstituteLocal,
+    getTeacherTimetableLocal, extractClassName, splitClassName, buildGridData };
+}
 
   </script>
 </body>
