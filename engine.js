@@ -1,8 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════
-   결보강 탐색 엔진 (GitHub Pages 정적 버전)
+   결보강 탐색 엔진 (GitHub Pages 정적 버전 v2)
    - 서버 없음: 모든 탐색·시뮬레이션이 브라우저에서 동작
-   - 대장 기능 제외: 원본 시간표 기준 정적 판단만 수행
-   - Code.gs(fix3)의 순수 로직을 포팅 (동등성 테스트 통과)
+   - 원본 시간표 기준 정적 판단 수행
+   - [v2 업데이트] 과목별 교과군 판별 및 교사별 주 교과군 자동 매핑
+   - [v2 업데이트] 보강 후보 탐색 시 결강 과목과 동일 교과군 교사 우선 정렬
    ═══════════════════════════════════════════════════════════════ */
 
 const DAY_IDX = { "월": 1, "화": 2, "수": 3, "목": 4, "금": 5 };
@@ -143,6 +144,8 @@ function searchScheduleLocal(scheduleIndex, scheduleList, allTeachers, targetTea
     return { success: false, message: "선택하신 시간에 해당 교사의 수업이 없습니다. (데이터: " + targetDay + " " + targetPeriod + "교시)" };
   }
   const targetClass = targetLesson.pureClass || targetLesson.className;
+  const targetCategory = deduceSubjectCategory(targetLesson.className || targetLesson.subject);
+  const teacherSubjectMap = buildTeacherSubjectMap(scheduleList);
 
   let swapList = [];
   let substituteList = [];
@@ -167,7 +170,8 @@ function searchScheduleLocal(scheduleIndex, scheduleList, allTeachers, targetTea
               else if (checkConsecutive(scheduleIndex, targetTeacher, dayB, periodB, targetDay, targetPeriod, consecutiveLimit)) isValid = false;
             }
             if (isValid) {
-              swapList.push({ teacherB: teacherB, dayB: dayB, periodB: periodB, classB: lesson.className });
+              const bCat = teacherSubjectMap[teacherB] || deduceSubjectCategory(lesson.className || lesson.subject);
+              swapList.push({ teacherB: teacherB, dayB: dayB, periodB: periodB, classB: lesson.className, categoryB: bCat });
             }
           }
         }
@@ -182,14 +186,30 @@ function searchScheduleLocal(scheduleIndex, scheduleList, allTeachers, targetTea
       if (tName !== targetTeacher && isTeacherFree(scheduleIndex, tName, targetDay, targetPeriod)) {
         let isValid = true;
         if (consecutiveLimit > 0 && checkConsecutive(scheduleIndex, tName, targetDay, targetPeriod, "", 0, consecutiveLimit)) isValid = false;
-        if (isValid) substituteList.push({ teacherB: tName });
+        if (isValid) {
+          const candCategory = teacherSubjectMap[tName] || "교과";
+          const isSame = (candCategory === targetCategory);
+          substituteList.push({
+            teacherB: tName,
+            category: candCategory,
+            isSameSubject: isSame
+          });
+        }
       }
+    });
+
+    // 동일 교과군 우선 정렬 -> 그 다음 교사명 가나다순
+    substituteList.sort(function(a, b) {
+      if (a.isSameSubject && !b.isSameSubject) return -1;
+      if (!a.isSameSubject && b.isSameSubject) return 1;
+      return a.teacherB.localeCompare(b.teacherB, 'ko');
     });
   }
 
   return {
     success: true,
     targetClassName: targetLesson.className,
+    targetCategory: targetCategory,
     swapData: swapList,
     substituteData: substituteList
   };
@@ -239,7 +259,7 @@ function getTeacherTimetableLocal(scheduleList, teacherName) {
 
 /* Node 테스트용 export */
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { parseCSV, parseSheetValues, buildScheduleIndex, isTeacherFree, checkConsecutive,
+  module.exports = { deduceSubjectCategory, buildTeacherSubjectMap, parseCSV, parseSheetValues, buildScheduleIndex, isTeacherFree, checkConsecutive,
     searchScheduleLocal, findCommonFreeTimeLocal, simulateSwapLocal, simulateSubstituteLocal,
     getTeacherTimetableLocal, extractClassName, splitClassName, buildGridData };
 }
