@@ -732,7 +732,7 @@
     </div>
   </div>
 
-  <script src="engine.js?v=20261020_v3"></script>
+  <script src="engine.js?v=20261020_v4"></script>
   <script>
 /* ═══════════════════════════════════════════════════════════════
    데이터 레이어 (GitHub 정적 버전 v1.2)
@@ -1046,8 +1046,14 @@ function loadTimetableOnStart() {
       var targetDate = document.getElementById('targetDate').value;
       var summaryBar = document.getElementById('resultSummaryBar');
       summaryBar.style.display = 'flex';
+
+      var tTeacher = res.targetTeacher || document.getElementById('teacher').value.trim();
+      var tDay = res.targetDay || document.getElementById('day').value;
+      var tPeriod = res.targetPeriod || document.getElementById('period').value;
+      var tClass = res.targetClass || res.targetClassName || '';
+
       document.getElementById('summaryTargetText').textContent =
-        res.targetTeacher + "T | " + targetDate + " (" + res.targetDay + ") " + res.targetPeriod + "교시 [" + res.targetClass + "]";
+        tTeacher + "T | " + targetDate + " (" + tDay + ") " + tPeriod + "교시" + (tClass ? " [" + tClass + "]" : "");
 
       var tbody = document.getElementById('candidatesTbody');
       tbody.innerHTML = '';
@@ -1057,16 +1063,19 @@ function loadTimetableOnStart() {
         res.swapData.forEach(function(item) {
           totalCount++;
           var dateB = getDateForDay(targetDate, item.dayB);
+          var classB = item.classNameB || item.classB || tClass;
+          var teacherBName = item.teacherB || item.teacher;
+          var catBadge = item.categoryB ? " <span class='badge' style='background:var(--gray-200); color:var(--gray-700); font-size:10px;'>" + escapeHtml(item.categoryB) + "</span>" : "";
           appendCandidateRow(tbody, [
             { html: "<span style='color:var(--primary); font-weight:700;'>🔄 맞교환</span>" },
-            { text: item.teacherB + " 선생님" },
+            { html: escapeHtml(teacherBName + " 선생님") + catBadge },
             { text: dateB + " (" + item.dayB + ") " + item.periodB + "교시" },
-            { text: item.classNameB || res.targetClass }
+            { text: classB }
           ], '선택', 'btn btn-warning btn-sm', function(btn) {
             selectSwapCandidate(
-              res.targetTeacher, res.targetDay, res.targetPeriod,
-              item.teacherB, item.dayB, item.periodB,
-              targetDate, dateB, res.targetClass, item.classNameB || res.targetClass, btn);
+              tTeacher, tDay, tPeriod,
+              teacherBName, item.dayB, item.periodB,
+              targetDate, dateB, tClass, classB, btn);
           });
         });
       }
@@ -1074,15 +1083,19 @@ function loadTimetableOnStart() {
       if (res.substituteData && res.substituteData.length > 0) {
         res.substituteData.forEach(function(item) {
           totalCount++;
+          var subTeacher = item.teacher || item.teacherB;
+          var catBadge = item.isSameSubject
+            ? " <span class='badge' style='background:#7c3aed; color:white; font-size:10px;'>★동일교과(" + escapeHtml(item.category || '') + ")</span>"
+            : (item.category ? " <span class='badge' style='background:var(--gray-200); color:var(--gray-700); font-size:10px;'>" + escapeHtml(item.category) + "</span>" : "");
           appendCandidateRow(tbody, [
             { html: "<span style='color:var(--success); font-weight:700;'>📋 보강</span>" },
-            { text: item.teacher + " 선생님" },
-            { text: targetDate + " (" + res.targetDay + ") " + res.targetPeriod + "교시" },
+            { html: escapeHtml(subTeacher + " 선생님") + catBadge },
+            { text: targetDate + " (" + tDay + ") " + tPeriod + "교시" },
             { text: "공강 배정 가능" }
           ], '선택', 'btn btn-success btn-sm', function(btn) {
             selectSubCandidate(
-              res.targetTeacher, item.teacher, res.targetDay,
-              res.targetPeriod, res.targetClass, targetDate, btn);
+              tTeacher, subTeacher, tDay,
+              tPeriod, tClass, targetDate, btn);
           });
         });
       }

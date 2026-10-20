@@ -219,11 +219,25 @@ function searchScheduleLocal(scheduleIndex, scheduleList, allTeachers, targetTea
             }
             if (isValid) {
               const bCat = teacherSubjectMap[teacherB] || deduceSubjectCategory(lesson.className || lesson.subject);
-              swapList.push({ teacherB: teacherB, dayB: dayB, periodB: periodB, classB: lesson.className, categoryB: bCat });
+              const sortOrder = candidateDayNum >= targetDayNum ? (candidateDayNum - targetDayNum) : (candidateDayNum - targetDayNum + 5);
+              swapList.push({
+                teacherB: teacherB,
+                dayB: dayB,
+                periodB: periodB,
+                classNameB: lesson.className,
+                classB: lesson.className,
+                categoryB: bCat,
+                sortOrder: sortOrder
+              });
             }
           }
         }
       }
+    });
+
+    swapList.sort(function(a, b) {
+      if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
+      return a.periodB - b.periodB;
     });
   }
 
@@ -238,6 +252,7 @@ function searchScheduleLocal(scheduleIndex, scheduleList, allTeachers, targetTea
           const candCategory = teacherSubjectMap[tName] || "교과";
           const isSame = (candCategory === targetCategory);
           substituteList.push({
+            teacher: tName,
             teacherB: tName,
             category: candCategory,
             isSameSubject: isSame
@@ -250,12 +265,16 @@ function searchScheduleLocal(scheduleIndex, scheduleList, allTeachers, targetTea
     substituteList.sort(function(a, b) {
       if (a.isSameSubject && !b.isSameSubject) return -1;
       if (!a.isSameSubject && b.isSameSubject) return 1;
-      return a.teacherB.localeCompare(b.teacherB, 'ko');
+      return a.teacher.localeCompare(b.teacher, 'ko');
     });
   }
 
   return {
     success: true,
+    targetTeacher: targetTeacher,
+    targetDay: targetDay,
+    targetPeriod: targetPeriod,
+    targetClass: targetClass,
     targetClassName: targetLesson.className,
     targetCategory: targetCategory,
     swapData: swapList,
@@ -295,7 +314,13 @@ function simulateSubstituteLocal(scheduleList, teacherB, dayA, periodA, classA) 
   const gridB_orig = buildGridData(scheduleList.filter(function(s) { return s.teacher === teacherB; }));
   const gridB_new = JSON.parse(JSON.stringify(gridB_orig));
   gridB_new[dayA][periodA] = classA + "(보강)";
-  return { success: true, teacherB_orig: gridB_orig, teacherB_new: gridB_new };
+  return {
+    success: true,
+    teacher_orig: gridB_orig,
+    teacher_new: gridB_new,
+    teacherB_orig: gridB_orig,
+    teacherB_new: gridB_new
+  };
 }
 
 /* 교사 시간표 조회 (정적) */
